@@ -145,6 +145,7 @@ Notes
 This method gives an estimate of the expected return per loan based on the learned Q-function. We explicitly document this method in the report (and contrast it with FQE when applicable).
 We recommend reporting the bootstrap CI to show uncertainty.
 
+
 B. Legacy / exact Off-Policy Evaluator (if you want the original API)
    If you prefer the older evaluator APIs (e.g., OffPolicyEvaluator / evaluate_on_environment), use a separate environment and install: pip install "d3rlpy==1.1.1"
 
