@@ -15,9 +15,9 @@ I used a sample of 149998 loans from the LendingClub dataset, focusing on loans 
 ## 2. Model 1: Predictive Deep Learning Model
 
 ### 2.1. Model & Metrics
-* *Architecture:* I built a Multi-Layer Perceptron (MLP) using TensorFlow/Keras with [Number] hidden layers.
+* *Architecture:* I built a Multi-Layer Perceptron (MLP) using TensorFlow/Keras with 5 hidden layers.
 * *Target:* Predict is_default (1 for "Charged Off", 0 for "Fully Paid").
-* *Key Challenge:* The dataset was imbalanced, with [X]% non-defaulters. I addressed this using class_weight='balanced' during training.
+* *Key Challenge:* The dataset was imbalanced. I addressed this using class_weight='balanced' during training.
 
 ### 2.2. Final Results (Test Set)
 * *Area Under the ROC Curve (AUC):* 0.7086
@@ -25,7 +25,7 @@ I used a sample of 149998 loans from the LendingClub dataset, focusing on loans 
 
 ### 2.3. Analysis of Metrics
 * *Why AUC/F1?* These metrics are ideal for a predictive classifier task.
-* *AUC* measures the model's ability to distinguish between a "good" loan and a "bad" loan across all possible thresholds. An AUC of [Your AUC] indicates [a good/fair/poor] ability to separate classes.
+* *AUC* measures the model's ability to distinguish between a "good" loan and a "bad" loan across all possible thresholds. An AUC of 0.7086 indicates a good ability to separate classes.
 * *F1-Score* measures the balance between Precision and Recall, which is crucial for an imbalanced dataset. It tells us how effective the model is at identifying the minority class (defaulters) without incorrectly flagging too many good loans.
 
 These metrics tell us *"How well does the model *identify risk?"** They do not tell us what to do with that risk information to make money.
@@ -48,7 +48,7 @@ These metrics tell us *"How well does the model *identify risk?"** They do not t
 ### 3.3. Analysis of Metric
 * *Why Estimated Policy Value?* This metric directly answers the business question.
 * It represents the *expected financial return (average profit/loss) per loan* if we were to deploy this RL agent's policy in the real world.
-* A positive value of 1924.2563 suggests the policy is, on average, profitable, while a negative value would suggest it loses money. This metric combines the probability of an outcome (which the DL model predicts) with the magnitude of that outcome (the financial reward/loss), which is what the business truly cares about.
+* A positive value of 1924.2563 suggests the policy is profitable, while a negative value would suggest it loses money. This metric combines the probability of an outcome (which the DL model predicts) with the magnitude of that outcome (the financial reward/loss), which is what the business truly cares about.
 
 ---
 
@@ -76,4 +76,5 @@ The RL agent learned a more nuanced, profit-maximizing policy that is willing to
 * *Explore Counterfactuals:* I would want to gather data on rejected applicants to build a more robust model of the true action space.
 
 * *Refine the Threshold:* For the DL model, the 0.5 threshold is arbitrary. I would run simulations to find the optimal probability threshold that maximizes business value, effectively turning the DL model into a "policy" that can be compared more directly to the RL agent.
+
 
