@@ -8,7 +8,7 @@ The goal of this project was to compare two machine learning paradigms for a fin
 1.  *Supervised DL:* A predictive model to estimate the probability of default.
 2.  *Offline RL:* A decision-making agent to learn an optimal approval policy to maximize financial return.
 
-I used a sample of 10000 loans from the LendingClub dataset, focusing on loans with a final status of "Fully Paid" or "Charged Off."
+I used a sample of 149998 loans from the LendingClub dataset, focusing on loans with a final status of "Fully Paid" or "Charged Off."
 
 ---
 
@@ -76,3 +76,4 @@ The RL agent learned a more nuanced, profit-maximizing policy that is willing to
 * *Explore Counterfactuals:* I would want to gather data on rejected applicants to build a more robust model of the true action space.
 
 * *Refine the Threshold:* For the DL model, the 0.5 threshold is arbitrary. I would run simulations to find the optimal probability threshold that maximizes business value, effectively turning the DL model into a "policy" that can be compared more directly to the RL agent.
+
