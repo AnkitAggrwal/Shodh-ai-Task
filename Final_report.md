@@ -1,6 +1,6 @@
 # Policy Optimization for Financial Decision-Making
-*Name:* [Your Name]
-*Date:* [Date]
+*Name:* Ankit Aggarwal
+*Date:* 30/10/2025
 
 ## 1. Project Overview & Objective
 
@@ -8,7 +8,7 @@ The goal of this project was to compare two machine learning paradigms for a fin
 1.  *Supervised DL:* A predictive model to estimate the probability of default.
 2.  *Offline RL:* A decision-making agent to learn an optimal approval policy to maximize financial return.
 
-I used a sample of [Number] loans from the LendingClub dataset, focusing on loans with a final status of "Fully Paid" or "Charged Off."
+I used a sample of 10000 loans from the LendingClub dataset, focusing on loans with a final status of "Fully Paid" or "Charged Off."
 
 ---
 
@@ -20,8 +20,8 @@ I used a sample of [Number] loans from the LendingClub dataset, focusing on loan
 * *Key Challenge:* The dataset was imbalanced, with [X]% non-defaulters. I addressed this using class_weight='balanced' during training.
 
 ### 2.2. Final Results (Test Set)
-* *Area Under the ROC Curve (AUC):* [Paste your AUC from Notebook 02]
-* *F1-Score:* [Paste your F1-Score from Notebook 02]
+* *Area Under the ROC Curve (AUC):* 0.7086
+* *F1-Score:* 0.4218
 
 ### 2.3. Analysis of Metrics
 * *Why AUC/F1?* These metrics are ideal for a predictive classifier task.
@@ -43,24 +43,23 @@ These metrics tell us *"How well does the model *identify risk?"** They do not t
 * *Algorithm:* I used *Conservative Q-Learning (CQL)* from the d3rlpy library, as it is designed for offline datasets where we only have data for a single action (in our case, action=1).
 
 ### 3.2. Final Results (Test Set)
-* *Estimated Policy Value (from FQE):* [Paste your value from Notebook 03]
+* *Estimated Policy Value (from FQE):* 1924.2563
 
 ### 3.3. Analysis of Metric
 * *Why Estimated Policy Value?* This metric directly answers the business question.
 * It represents the *expected financial return (average profit/loss) per loan* if we were to deploy this RL agent's policy in the real world.
-* A positive value of [Your Value] suggests the policy is, on average, profitable, while a negative value would suggest it loses money. This metric combines the probability of an outcome (which the DL model predicts) with the magnitude of that outcome (the financial reward/loss), which is what the business truly cares about.
+* A positive value of 1924.2563 suggests the policy is, on average, profitable, while a negative value would suggest it loses money. This metric combines the probability of an outcome (which the DL model predicts) with the magnitude of that outcome (the financial reward/loss), which is what the business truly cares about.
 
 ---
 
 ## 4. Comparative Analysis & Future Steps
 
 ### 4.1. Policy Disagreements
-The most insightful part of this project was analyzing where the two models disagreed. I defined the DL policy as "Approve if $P(\text{default}) < 0.5$."
+The most insightful part of this project was analyzing where the two models disagreed.
 
-I found [Number] cases where the *DL model would "Deny" but the RL agent would "Approve."*
+I found 7777 cases where the *DL model would "Deny" but the RL agent would "Approve."*
 
 *Example Analysis:*
-* [Look at your 'interesting_cases' table from Notebook 04]
 * I observed that these applicants often had a *high interest rate* (e.g., > 15%) and a *high predicted probability of default* (e.g., > 0.5).
 * *DL Model's Logic:* The model saw the high default probability and correctly flagged it as "high-risk," leading to a "Deny" action.
 * *RL Agent's Logic:* The agent saw the same high risk but also saw the *high potential reward* from the high interest rate. It learned that even with a 60% chance of default, the 40% chance of a large interest-based profit made the "Approve" action have a higher expected value than the "Deny" action (which has a guaranteed reward of 0).
@@ -75,4 +74,5 @@ The RL agent learned a more nuanced, profit-maximizing policy that is willing to
 ### 4.3. Future Steps
 * *Deploy as an A/B Test:* I would *not* deploy this RL agent to replace the entire system. I would deploy it as an A/B test on a small fraction (e.g., 5%) of new applications. We could run the RL policy and the existing policy in parallel to see which one performs better on new, live data.
 * *Explore Counterfactuals:* I would want to gather data on rejected applicants to build a more robust model of the true action space.
+
 * *Refine the Threshold:* For the DL model, the 0.5 threshold is arbitrary. I would run simulations to find the optimal probability threshold that maximizes business value, effectively turning the DL model into a "policy" that can be compared more directly to the RL agent.
